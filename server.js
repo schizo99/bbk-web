@@ -13,8 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/:days?', function(req, res) {
     var days = req.params["days"]
     if (days == undefined) days = 30
-    console.log(days)
-    ejs.renderFile('./src/index.ejs', {days: days}, {}, function(err, template) {
+    ejs.renderFile('./index.ejs', {days: days}, {}, function(err, template) {
       if (err)
         throw err;
       else
