@@ -11,7 +11,7 @@ var days = document.currentScript.getAttribute('days');
 
 function renderChart() {
     console.log("render")
-    fetch("http://localhost:8086/query?db=bbk&q=select+download,upload+from+bbk+WHERE+time+>=+now()+-+"+days+"d")
+    fetch("http://influxdb:8086/query?db=bbk&q=select+download,upload+from+bbk+WHERE+time+>=+now()+-+"+days+"d")
     .catch(err => updateContainer(err))
     .then(response => response.json())
     .then(data => {
