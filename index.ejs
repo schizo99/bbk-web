@@ -21,11 +21,11 @@
 <body>
     <div class="slidecontainer">
         <label for="myRange" id="demo"></label>
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        <input type="range" min="1" max="100" value="<%= days %>" class="slider" id="myRange">
     </div>
     <div class="container" id="container">
         <canvas id="myChart"></canvas>
     </div>    
 </body>
-<script src="main.js" days="<%= days %>"></script>
+<script src="main.js" measurement="<%= JSON.stringify(measurement) %>"></script>
 </html>
