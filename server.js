@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/:days?', function(req, res) {
     var days = req.params["days"]
     if (days == undefined) days = 30
-    var host = "localhost"
+    var host = "influxdb"
     http.get("http://"+host+":8086/query?db=bbk&q=select+download,upload+from+bbk+WHERE+time+>=+now()+-+"+days+"d", (resp) => {
       let data = ''
       resp.on('data', (chunk) => {
