@@ -4,7 +4,7 @@ const ejs = require('ejs');
 const path = require("path")
 const http = require("http")
 var fs = require('fs');
-const port = 8000;
+const port = 80;
 
 app.use(express.json());
 
@@ -14,7 +14,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/:days?', function(req, res) {
     var days = req.params["days"]
     if (days == undefined) days = 30
-    var host = "influxdb"
+    var host = process.env.DATABASE || "influxdb";
+    var threshold = process.env.THRESHOLD || "200";
     http.get("http://"+host+":8086/query?db=bbk&q=select+download,upload+from+bbk+WHERE+time+>=+now()+-+"+days+"d", (resp) => {
       let data = ''
       resp.on('data', (chunk) => {
@@ -24,7 +25,7 @@ app.get('/:days?', function(req, res) {
       // The whole response has been received. Print out the result.
       resp.on('end', () => {
         var measurement = JSON.parse(data);
-        ejs.renderFile('./index.ejs', {measurement: measurement, days: days}, {}, function(err, template) {
+        ejs.renderFile('./index.ejs', {measurement: measurement, days: days, threshold: threshold}, {}, function(err, template) {
           if (err)
             throw err;
           else

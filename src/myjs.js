@@ -1,9 +1,12 @@
 import Chart from "chart.js";
 import ChartAnnotation from 'chartjs-plugin-annotation';
-
 var measurement = document.currentScript.getAttribute('measurement');
+var threshold = document.currentScript.getAttribute('threshold');
+console.log(threshold);
+
 let data = JSON.parse(measurement)
 data = data.results[0].series[0].values;
+
 var download = data.map(o => {
     return {x: o[0], y: o[1]}
 });
@@ -40,7 +43,7 @@ var chart = new Chart(ctx, {
             type: 'line',
             mode: 'horizontal',
             scaleID: 'y-axis-0',
-            value: '100',
+            value: threshold,
             borderColor: 'red',
             borderWidth: 2
         }]
